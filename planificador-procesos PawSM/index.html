@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PlanificaOS — Algoritmos de Planificación</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- FONDO ANIMADO: cuadrícula tech verde, solo CSS, no pesa nada -->
+  <div class="grid-bg"></div>
+  <div class="scanline"></div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="logo">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">Planifica<span class="logo-accent">OS</span></span>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn active" onclick="mostrarSeccion('inicio')">Inicio</button>
+      <button class="nav-btn" onclick="mostrarSeccion('aprende')">Aprende</button>
+      <button class="nav-btn" onclick="mostrarSeccion('simula')">Simula</button>
+      <button class="nav-btn" onclick="mostrarSeccion('practica')">Practica</button>
+    </nav>
+    <div class="header-right">
+      <button class="vol-btn" id="vol-btn" onclick="toggleSonido()" title="Sonido">🔊</button>
+    </div>
+  </header>
+
+  <!-- ===== SAMY ===== -->
+  <!-- Vive fuera de las secciones para aparecer en cualquier pantalla -->
+  <div id="samy-container" class="samy-container">
+
+    <!-- Globo de diálogo -->
+    <div id="samy-bubble" class="samy-bubble hidden">
+      <p id="samy-texto"></p>
+    </div>
+
+    <!-- ESTADO NORMAL -->
+    <div id="samy-normal" class="samy-svg samy-float" onclick="samyHabla('¡Hola! Soy Samy. Estoy aquí para ayudarte. ¡Explorá el menú!')">
+      <svg viewBox="0 0 155 82" width="110" height="74" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="72" cy="80" rx="44" ry="4" fill="#000" opacity="0.12"/>
+        <path d="M18 50 Q8 46 10 38 Q12 32 20 41" fill="#8eda7a" stroke="#4a9a3a" stroke-width="1.2"/>
+        <ellipse cx="36" cy="70" rx="13" ry="8" fill="#8eda7a" stroke="#4a9a3a" stroke-width="1.5"/>
+        <ellipse cx="86" cy="70" rx="13" ry="8" fill="#8eda7a" stroke="#4a9a3a" stroke-width="1.5"/>
+        <ellipse cx="60" cy="56" rx="42" ry="18" fill="#a8e88a" stroke="#4a9a3a" stroke-width="1.8"/>
+        <ellipse cx="56" cy="43" rx="36" ry="22" fill="#3a7a30" stroke="#1a4a18" stroke-width="2"/>
+        <line x1="56" y1="22" x2="56" y2="64" stroke="#1a4a18" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="21" y1="43" x2="91" y2="43" stroke="#1a4a18" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="56" y1="22" x2="21" y2="43" stroke="#1a4a18" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="56" y1="22" x2="91" y2="43" stroke="#1a4a18" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="21" y1="43" x2="38" y2="64" stroke="#1a4a18" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="91" y1="43" x2="74" y2="64" stroke="#1a4a18" stroke-width="1.2" stroke-linecap="round"/>
+        <ellipse cx="102" cy="48" rx="9" ry="8" fill="#a8e88a" stroke="#4a9a3a" stroke-width="1.6"/>
+        <circle cx="118" cy="32" r="17" fill="#a8e88a" stroke="#4a9a3a" stroke-width="1.8"/>
+        <circle cx="118" cy="28" r="7.5" fill="white" stroke="#222" stroke-width="1"/>
+        <circle cx="119" cy="29" r="5"   fill="#1a1a1a"/>
+        <circle cx="121" cy="26" r="1.8" fill="white"/>
+        <circle cx="117" cy="31" r="0.8" fill="white" opacity="0.5"/>
+        <circle cx="132" cy="34" r="1.3" fill="#4a9a3a"/>
+        <path d="M126 38 Q130 43 134 39" stroke="#4a9a3a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <ellipse cx="130" cy="38" rx="5.5" ry="3.5" fill="#ffaaaa" opacity="0.5"/>
+      </svg>
+      <div class="samy-label">SAMY</div>
+    </div>
+
+    <!-- ESTADO CONTENTA -->
+    <div id="samy-contenta" class="samy-svg samy-bounce hidden">
+      <svg viewBox="0 0 155 82" width="110" height="74" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="72" cy="80" rx="44" ry="4" fill="#000" opacity="0.12"/>
+        <path d="M18 50 Q8 46 10 38 Q12 32 20 41" fill="#8eda7a" stroke="#4a9a3a" stroke-width="1.2"/>
+        <ellipse cx="36" cy="70" rx="13" ry="8" fill="#8eda7a" stroke="#4a9a3a" stroke-width="1.5"/>
+        <ellipse cx="86" cy="70" rx="13" ry="8" fill="#8eda7a" stroke="#4a9a3a" stroke-width="1.5"/>
+        <ellipse cx="60" cy="56" rx="42" ry="18" fill="#a8e88a" stroke="#4a9a3a" stroke-width="1.8"/>
+        <ellipse cx="56" cy="43" rx="36" ry="22" fill="#3a7a30" stroke="#1a4a18" stroke-width="2"/>
+        <line x1="56" y1="22" x2="56" y2="64" stroke="#1a4a18" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="21" y1="43" x2="91" y2="43" stroke="#1a4a18" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="56" y1="22" x2="21" y2="43" stroke="#1a4a18" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="56" y1="22" x2="91" y2="43" stroke="#1a4a18" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="21" y1="43" x2="38" y2="64" stroke="#1a4a18" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="91" y1="43" x2="74" y2="64" stroke="#1a4a18" stroke-width="1.2" stroke-linecap="round"/>
+        <ellipse cx="102" cy="48" rx="9" ry="8" fill="#a8e88a" stroke="#4a9a3a" stroke-width="1.6"/>
+        <circle cx="118" cy="32" r="17" fill="#a8e88a" stroke="#4a9a3a" stroke-width="1.8"/>
+        <path d="M111 27 Q118 21 125 27" stroke="#1a1a1a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="130" cy="38" rx="6" ry="4" fill="#ff8888" opacity="0.6"/>
+        <path d="M124 39 Q129 45 134 40" stroke="#4a9a3a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <text x="2"   y="16" font-size="12" fill="#FFD700">✨</text>
+        <text x="118" y="12" font-size="12" fill="#FFD700">⭐</text>
+      </svg>
+      <div class="samy-label">SAMY</div>
+    </div>
+
+    <!-- ESTADO ALERTA -->
+    <div id="samy-alerta" class="samy-svg samy-float hidden">
+      <svg viewBox="0 0 155 82" width="110" height="74" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="72" cy="80" rx="44" ry="4" fill="#000" opacity="0.12"/>
+        <path d="M18 50 Q8 46 10 38 Q12 32 20 41" fill="#8eda7a" stroke="#4a9a3a" stroke-width="1.2"/>
+        <ellipse cx="36" cy="70" rx="13" ry="8" fill="#8eda7a" stroke="#4a9a3a" stroke-width="1.5"/>
+        <ellipse cx="86" cy="70" rx="13" ry="8" fill="#8eda7a" stroke="#4a9a3a" stroke-width="1.5"/>
+        <ellipse cx="60" cy="56" rx="42" ry="18" fill="#a8e88a" stroke="#4a9a3a" stroke-width="1.8"/>
+        <ellipse cx="56" cy="43" rx="36" ry="22" fill="#3a7a30" stroke="#1a4a18" stroke-width="2"/>
+        <line x1="56" y1="22" x2="56" y2="64" stroke="#1a4a18" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="21" y1="43" x2="91" y2="43" stroke="#1a4a18" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="56" y1="22" x2="21" y2="43" stroke="#1a4a18" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="56" y1="22" x2="91" y2="43" stroke="#1a4a18" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="21" y1="43" x2="38" y2="64" stroke="#1a4a18" stroke-width="1.2" stroke-linecap="round"/>
+        <line x1="91" y1="43" x2="74" y2="64" stroke="#1a4a18" stroke-width="1.2" stroke-linecap="round"/>
+        <ellipse cx="102" cy="48" rx="9" ry="8" fill="#a8e88a" stroke="#4a9a3a" stroke-width="1.6"/>
+        <circle cx="118" cy="32" r="17" fill="#a8e88a" stroke="#4a9a3a" stroke-width="1.8"/>
+        <circle cx="118" cy="28" r="8"   fill="white" stroke="#222" stroke-width="1"/>
+        <circle cx="118" cy="28" r="5.5" fill="#1a1a1a"/>
+        <circle cx="120" cy="25" r="2"   fill="white"/>
+        <path d="M111 20 Q118 16 125 20" stroke="#3a7a28" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <ellipse cx="130" cy="38" rx="5.5" ry="3.5" fill="#ffaaaa" opacity="0.4"/>
+        <path d="M126 41 Q130 38 134 41" stroke="#4a9a3a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+        <text x="122" y="13" font-size="15" fill="#ffcc00" font-weight="bold" font-family="monospace">?</text>
+      </svg>
+      <div class="samy-label">SAMY</div>
+    </div>
+
+  </div>
+
+  <!-- ===== CONTENIDO PRINCIPAL ===== -->
+  <main>
+
+    <!-- INICIO -->
+    <section id="seccion-inicio" class="seccion activa">
+      <div class="inicio-hero">
+        <div class="hero-badge">Sistema educativo interactivo</div>
+        <h1 class="hero-title">
+          Algoritmos de<br>
+          <span class="title-accent">Planificación</span><br>
+          de Procesos
+        </h1>
+        <p class="hero-subtitle">
+          Aprendé, simulá y practicá los 5 algoritmos principales.<br>
+          Samy te guía en cada paso.
+        </p>
+        <div class="hero-cards">
+          <div class="hero-card" onclick="mostrarSeccion('aprende')">
+            <div class="card-icon">📖</div>
+            <div class="card-title">Aprende</div>
+            <div class="card-desc">Teoría animada paso a paso con Samy</div>
+            <div class="card-algos">FCFS · SJF · SRT · Prioridades · RR</div>
+          </div>
+          <div class="hero-card featured" onclick="mostrarSeccion('simula')">
+            <div class="card-badge">PRINCIPAL</div>
+            <div class="card-icon">⚙️</div>
+            <div class="card-title">Simula</div>
+            <div class="card-desc">Ingresá tus procesos y visualizá el Gantt</div>
+            <div class="card-algos">Mezcla algoritmos · Cálculo automático</div>
+          </div>
+          <div class="hero-card" onclick="mostrarSeccion('practica')">
+            <div class="card-icon">🎮</div>
+            <div class="card-title">Practica</div>
+            <div class="card-desc">Modo juego con estrellas y comodines</div>
+            <div class="card-algos">Ejercicios · Ranking · Comodines</div>
+          </div>
+        </div>
+        <div class="algo-pills">
+          <span class="pill" onclick="mostrarSeccion('aprende'); cargarTeoria('fcfs')">FCFS</span>
+          <span class="pill" onclick="mostrarSeccion('aprende'); cargarTeoria('sjf')">SJF</span>
+          <span class="pill" onclick="mostrarSeccion('aprende'); cargarTeoria('srt')">SRT</span>
+          <span class="pill" onclick="mostrarSeccion('aprende'); cargarTeoria('prioridades')">Prioridades</span>
+          <span class="pill" onclick="mostrarSeccion('aprende'); cargarTeoria('rr')">Round Robin</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- APRENDE -->
+    <section id="seccion-aprende" class="seccion">
+      <div class="seccion-header">
+        <h2>Modo <span class="title-accent">Aprendizaje</span></h2>
+        <p>Seleccioná un algoritmo y Samy te explica todo paso a paso</p>
+      </div>
+      <div class="algo-selector">
+        <button class="algo-btn active" onclick="cargarTeoria('fcfs')"        data-algo="fcfs">FCFS</button>
+        <button class="algo-btn"        onclick="cargarTeoria('sjf')"         data-algo="sjf">SJF</button>
+        <button class="algo-btn"        onclick="cargarTeoria('srt')"         data-algo="srt">SRT</button>
+        <button class="algo-btn"        onclick="cargarTeoria('prioridades')" data-algo="prioridades">Prioridades</button>
+        <button class="algo-btn"        onclick="cargarTeoria('rr')"          data-algo="rr">Round Robin</button>
+      </div>
+      <div class="teoria-panel">
+        <div class="teoria-info"   id="teoria-info"></div>
+        <div class="teoria-visual" id="teoria-visual"></div>
+      </div>
+      <div class="paso-controles">
+        <button class="ctrl-btn"         onclick="pasoAnterior()">← Anterior</button>
+        <span id="paso-indicador" class="paso-num">Paso 1 / 1</span>
+        <button class="ctrl-btn primary" onclick="pasoSiguiente()">Siguiente →</button>
+        <button class="ctrl-btn"         onclick="reproducirAuto()">▶ Auto</button>
+      </div>
+    </section>
+
+    <!-- SIMULA -->
+    <section id="seccion-simula" class="seccion">
+      <div class="seccion-header">
+        <h2>Modo <span class="title-accent">Simulación</span></h2>
+        <p>Ingresá tus procesos, elegí el algoritmo y visualizá el resultado</p>
+      </div>
+      <div class="simula-layout">
+        <div class="panel-entrada">
+          <h3 class="panel-title">Procesos</h3>
+          <div class="tabla-procesos">
+            <div class="tabla-header">
+              <span>Proceso</span><span>T. CPU</span>
+              <span>Llegada</span><span>Prioridad</span><span></span>
+            </div>
+            <div id="lista-procesos"></div>
+          </div>
+          <button class="btn-agregar" onclick="agregarProceso()">+ Agregar proceso</button>
+          <!-- SELECTOR DE ALGORITMOS CON MEZCLA -->
+          <h3 class="panel-title" style="margin-top:20px">Algoritmo</h3>
+
+          <!-- Modo: simple o mezcla -->
+          <div class="modo-tabs">
+            <button class="modo-tab active" id="tab-simple" onclick="cambiarModo('simple')">Un algoritmo</button>
+            <button class="modo-tab"        id="tab-mezcla" onclick="cambiarModo('mezcla')">Mezclar dos</button>
+          </div>
+
+          <!-- MODO SIMPLE: un solo algoritmo -->
+          <div id="modo-simple">
+            <div class="algo-grid">
+              <label class="algo-check"><input type="radio" name="algo-sim" value="fcfs"        checked onchange="actualizarCampos()"/><span>FCFS</span></label>
+              <label class="algo-check"><input type="radio" name="algo-sim" value="sjf"               onchange="actualizarCampos()"/><span>SJF</span></label>
+              <label class="algo-check"><input type="radio" name="algo-sim" value="srt"               onchange="actualizarCampos()"/><span>SRT</span></label>
+              <label class="algo-check"><input type="radio" name="algo-sim" value="prioridades"       onchange="actualizarCampos()"/><span>Prioridades</span></label>
+              <label class="algo-check"><input type="radio" name="algo-sim" value="rr"                onchange="actualizarCampos()"/><span>Round Robin</span></label>
+            </div>
+          </div>
+
+          <!-- MODO MEZCLA: elegir dos algoritmos -->
+          <div id="modo-mezcla" class="hidden">
+            <p class="mezcla-hint">Seleccioná el algoritmo principal y luego el secundario</p>
+
+            <!-- Algoritmo 1 -->
+            <div class="mezcla-fila">
+              <span class="mezcla-label">Principal</span>
+              <div class="algo-grid-mezcla">
+                <label class="algo-check-mezcla"><input type="radio" name="algo-1" value="fcfs"        checked onchange="validarMezcla()"/><span>FCFS</span></label>
+                <label class="algo-check-mezcla"><input type="radio" name="algo-1" value="sjf"               onchange="validarMezcla()"/><span>SJF</span></label>
+                <label class="algo-check-mezcla"><input type="radio" name="algo-1" value="srt"               onchange="validarMezcla()"/><span>SRT</span></label>
+                <label class="algo-check-mezcla"><input type="radio" name="algo-1" value="prioridades"       onchange="validarMezcla()"/><span>Prioridades</span></label>
+                <label class="algo-check-mezcla"><input type="radio" name="algo-1" value="rr"                onchange="validarMezcla()"/><span>RR</span></label>
+              </div>
+            </div>
+
+            <!-- Flecha -->
+            <div class="mezcla-flecha">+</div>
+
+            <!-- Algoritmo 2 -->
+            <div class="mezcla-fila">
+              <span class="mezcla-label">Secundario</span>
+              <div class="algo-grid-mezcla">
+                <label class="algo-check-mezcla"><input type="radio" name="algo-2" value="fcfs"              onchange="validarMezcla()"/><span>FCFS</span></label>
+                <label class="algo-check-mezcla"><input type="radio" name="algo-2" value="sjf"               onchange="validarMezcla()"/><span>SJF</span></label>
+                <label class="algo-check-mezcla"><input type="radio" name="algo-2" value="srt"               onchange="validarMezcla()"/><span>SRT</span></label>
+                <label class="algo-check-mezcla"><input type="radio" name="algo-2" value="prioridades" checked onchange="validarMezcla()"/><span>Prioridades</span></label>
+                <label class="algo-check-mezcla"><input type="radio" name="algo-2" value="rr"                onchange="validarMezcla()"/><span>RR</span></label>
+              </div>
+            </div>
+
+            <!-- Estado de compatibilidad -->
+            <div id="mezcla-status" class="mezcla-status compatible">
+              <span id="mezcla-icono">✓</span>
+              <span id="mezcla-msg">FCFS + Prioridades son compatibles</span>
+            </div>
+          </div>
+
+          <!-- Quantum (aparece si RR está seleccionado en cualquier modo) -->
+          <div id="quantum-campo" class="quantum-campo hidden">
+            <label>Quantum (ms):</label>
+            <input type="number" id="quantum-val" value="3" min="1" max="20" class="input-num"/>
+          </div>
+
+          <button class="btn-simular" onclick="ejecutarSimulacion()">▶ Simular</button>
+          <button class="btn-limpiar" onclick="limpiarSimulacion()">✕ Limpiar</button>
+        </div>
+        <div class="panel-resultado">
+          <h3 class="panel-title">Diagrama de Gantt</h3>
+          <div id="gantt-container" class="gantt-container">
+            <div class="gantt-placeholder"><span>El diagrama aparecerá aquí después de simular</span></div>
+          </div>
+          <h3 class="panel-title" style="margin-top:20px">Métricas</h3>
+          <div id="metricas-container" class="metricas-container hidden">
+            <table class="tabla-metricas" id="tabla-metricas">
+              <thead>
+                <tr>
+                  <th>Proceso</th><th>Llegada</th><th>T. CPU</th>
+                  <th>Inicio</th><th>Fin</th><th>T. Espera</th><th>T. Retorno</th>
+                </tr>
+              </thead>
+              <tbody id="metricas-body"></tbody>
+              <tfoot  id="metricas-foot"></tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRACTICA -->
+    <section id="seccion-practica" class="seccion">
+      <div class="seccion-header">
+        <h2>Modo <span class="title-accent">Práctica</span></h2>
+        <p>¿Podés armar el Gantt correcto? Ganás estrellas por cada acierto</p>
+      </div>
+      <div class="juego-hud">
+        <div class="hud-item">
+          <span class="hud-label">Estrellas</span>
+          <span class="hud-val" id="estrellas-display">⭐ 0</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">Nivel</span>
+          <span class="hud-val" id="nivel-display">1</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">Comodines</span>
+          <span class="hud-val" id="comodines-display">🃏 3</span>
+        </div>
+        <button class="btn-comodin" onclick="usarComodin()">Usar comodín</button>
+      </div>
+      <div class="ejercicio-panel" id="ejercicio-panel">
+        <div class="ejercicio-header">
+          <span id="ejercicio-titulo">Ejercicio 1</span>
+          <span id="ejercicio-algo-tag" class="algo-tag">FCFS</span>
+        </div>
+        <div id="ejercicio-tabla" class="ejercicio-tabla"></div>
+      </div>
+      <div class="respuesta-area">
+        <h3 class="panel-title">Construí el Gantt</h3>
+        <div id="gantt-practica"   class="gantt-practica"></div>
+        <div id="procesos-palette" class="procesos-palette"></div>
+      </div>
+      <div class="practica-btns">
+        <button class="btn-simular" onclick="verificarRespuesta()">✔ Verificar</button>
+        <button class="btn-limpiar" onclick="nuevoEjercicio()">↻ Nuevo ejercicio</button>
+      </div>
+      <div id="resultado-practica" class="resultado-practica hidden"></div>
+    </section>
+
+  </main>
+
+  <script src="algoritmos/fcfs.js"></script>
+  <script src="algoritmos/sjf.js"></script>
+  <script src="algoritmos/srt.js"></script>
+  <script src="algoritmos/prioridades.js"></script>
+  <script src="algoritmos/roundrobin.js"></script>
+  <script src="samy/samy.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
